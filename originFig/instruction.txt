@@ -1,0 +1,10 @@
+Paste your figures in this folder
+- The figure format can be any
+- The figure size can be any
+- Expected to include:
+    - 16 or 24 emojis (square)
+    - 1 banner (rectangle)
+    - 1 cover  (square)
+    - 1 small icon (square)
+    - 1 guide figure to ask for donnation (rectangle)
+    - 1 acknowledge figure

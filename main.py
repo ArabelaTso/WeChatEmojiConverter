@@ -2,12 +2,18 @@ import os
 from PIL import Image
 
 
-def reshape_and_convert(input_path, output_path, reshape_size: tuple, reduce=False):
+def reshape_and_convert(input_path, output_path, reshape_size: tuple, transparent=False):
     im = Image.open(input_path)
     im = im.resize(reshape_size)
-    # if reduce:
-    #     im = im.reduce(10)
-    #     im = im.resize(reshape_size)
+    if transparent:
+        newImage = []
+        for item in im.getdata():
+            if item[:3] == (255, 255, 255):
+                newImage.append((255, 255, 255, 0))
+            else:
+                newImage.append(item)
+        im.putdata(newImage)
+
     im.save(output_path)
     print(im.size)
 
@@ -41,11 +47,11 @@ if __name__ == '__main__':
         elif filename == "cover":
             reshape_and_convert(os.path.join(fig_dir, im),
                                 os.path.join(new_fig_dir, "cover" + requirement["cover"]["format"]),
-                                reshape_size=requirement["cover"]["size"])
+                                reshape_size=requirement["cover"]["size"], transparent=True)
         elif filename == "small":
             reshape_and_convert(os.path.join(fig_dir, im),
                                 os.path.join(new_fig_dir, "small" + requirement["small"]["format"]),
-                                reshape_size=requirement["small"]["size"])
+                                reshape_size=requirement["small"]["size"], transparent=True)
         elif filename == "guide":
             reshape_and_convert(os.path.join(fig_dir, im),
                                 os.path.join(new_fig_dir, "guide" + requirement["guide"]["format"]),
